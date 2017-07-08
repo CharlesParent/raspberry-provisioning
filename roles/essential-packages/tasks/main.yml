@@ -1,0 +1,33 @@
+---
+- set_fact:
+    real_ansible_host: "{{ ansible_host }}"
+
+- name: Install vim
+  apt:
+    name: vim
+    state: present
+
+- name: Install hfsplus
+  apt:
+    name: hfsplus
+    state: present
+
+- name: Install hfsutils
+  apt:
+    name: hfsutils
+    state: present
+
+- name: Install hfsprogs
+  apt:
+    name: hfsprogs
+    state: present
+
+- name: Install gdisk
+  apt:
+    name: gdisk
+    state: present
+
+- name: Install exfat-fuse
+  apt:
+    name: exfat-fuse
+    state: present

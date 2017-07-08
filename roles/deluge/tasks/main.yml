@@ -1,0 +1,62 @@
+---
+- set_fact:
+    real_ansible_host: "{{ ansible_host }}"
+    become: true
+    becom_user: pi
+
+- name: Install deluge
+  apt:
+    name: deluged
+    state: present
+
+- name: Install deluge-console
+  apt:
+    name: deluge-console
+    state: present
+
+- name: Install deluge-web
+  apt:
+    name: deluge-web
+    state: present
+
+- name: start deluge to init files
+  command: deluged
+
+- name: deluge-console config commands
+  command: deluge-console config -s allow_remote True && deluge-console config allow_remote
+
+- name: restart deluged (1/2)
+  command: pkill deluged
+
+- name: save old auth
+  command: cp ~/.config/deluge/auth ~/.config/deluge/auth.old
+
+- name: copy new auth
+  template:
+    src: auth-deluge.j2
+    dest: ~/.config/deluge/auth
+
+- name: config to run deluge-dameon at startup
+  template:
+    src: start-up-deluge.j2
+    dest: /etc/default/deluge-daemon
+
+- name: "Install YaRSS2 plugin"
+  copy:
+    src: /Users/charlesparent/Projects/rasp/ansible-pi/YaRSS2-1.4.3-py2.7.egg
+    dest: ~/.config/deluge/plugins/
+    owner: root
+
+- name: restart deluged (2/2)
+  command: deluged && deluge-web
+
+#- name: Launch deluged deluge-web at start up
+#  command: chmod 755 /etc/init.d/deluge-daemon && update-rc.d deluge-daemon defaults && invoke-rc.d deluge-daemon start
+
+- name: configure rc.local
+  blockinfile:
+    dest: /etc/rc.local
+    insertbefore: "exit 0"
+    content: |
+      deluged
+      deluge-web &

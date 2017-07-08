@@ -1,0 +1,10 @@
+---
+- set_fact:
+    real_ansible_host: "{{ ansible_host }}"
+
+- name: Add ssh key to authorized ones
+  lineinfile:
+    dest: /home/pi/.ssh/authorized_keys
+    line: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDWwzcLy6cZ68u9GuEHo/iKhEl9weW2lk/BlZ5eyFzaNKsJ1HTORgfRrEBJ4dUIScp6nFNEP2CQCE2bh3sxaxxdQT/ODqS6OrR/YJHfO0ZTDG8Nv2rmMDIK0h71eZoZ4Pm8IDv1F9ynRo6N9UUV4vNA1EXZdUhI3ehK2GJ1aovcaq9VyukyUwO+q8EL0vM8Qq11jEKa8CKPhjLvgg2e4x/VxEqgEco3B9EYg8YmfNvMp1bY+yPDOsjGfITVFBpdzyh2pyt0D7h569UwGifjDDTex05GTRwc33wdxIDGgkZ4gbmTuePiFQvmr4Hth1UhsW4xyZtZOJiqz6h3ootesuEpf0cRYXlLj+nzrAkgnBRyVWYZcNNbSLaROzbTJ41aPUs+Dtfih1aOm6nqBlTyFV6SCVVckex71mRN7Ogmw6fdlqkNSgHvN1K1rFG/1BnbVKo8stP+4AFGIKpKel1XznT6QXb2Ye2FoKa3rPJtv9Dv+Uo1RJiEGeTAvNCz1VovIbKTx2anPUM7dcUsGuvzHglRDso9vWJCjEIYo13G+XBn9ZMTHXVwmKkaRCU+jUDZotJfZHShrsSb7wGSb5F+IeiLYwksHtQ1MPZON3uZg/VjZzwB1rrdRDqtjfQzyHG5JDuz5UyAwu05uePp4NmKzWK/LHZadqY5QrvsBAEykQxHbw== charlespa@theodo.fr'
+    insertafter: EOF
+    create: True

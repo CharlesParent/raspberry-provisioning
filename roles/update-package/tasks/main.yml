@@ -1,0 +1,11 @@
+---
+- set_fact:
+    real_ansible_host: "{{ ansible_host }}"
+
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes

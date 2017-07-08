@@ -1,9 +1,12 @@
 ---
 
-- name: Ansible Playbook for configuring brand new Raspberry Pi
+- name: TCRasp's Ansible Playbook
 
   hosts: webservers
   roles:
-    - pi
+    - ssh
+    - essential-packages
+    - external-disk-setup
+    - deluge
   remote_user: pi
-  become: yes
+  become: true
