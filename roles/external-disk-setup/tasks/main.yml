@@ -8,36 +8,38 @@
 - stat: path={{'/media/TCKDD'}}
   register: TCKDD
 
-- name: Creates directory NASDisk
-  file:
-    path: /media/NASDisk
-    state: directory
-    owner: pi
-    group: pi
-    mode: 0770
-    recurse: yes
-  when: NASDisk.stat.exists == False
+- block:
+  - name: Creates directory NASDisk
+    file:
+      path: /media/NASDisk
+      state: directory
+      owner: pi
+      group: pi
+      mode: 0770
+      recurse: yes
+    when: NASDisk.stat.exists == False
 
-- name: Creates directory TCKDD
-  file:
-    path: /media/TCKDD
-    state: directory
-    owner: pi
-    group: pi
-    mode: 0770
-    recurse: yes
-  when: TCKDD.stat.exists == False
+  - name: Creates directory TCKDD
+    file:
+      path: /media/TCKDD
+      state: directory
+      owner: pi
+      group: pi
+      mode: 0770
+      recurse: yes
+    when: TCKDD.stat.exists == False
 
-- name: Auto mount HFS drive at boot
-  lineinfile:
-    dest: /etc/fstab
-    line: 'UUID=9fd2a522-b2cf-3491-8267-0b0c0cfa4bb5 /media/TCKDD hfsplus defaults,force,nofail 0 0'
-    insertafter: EOF
-    create: True
+  - name: Auto mount HFS drive at boot
+    lineinfile:
+      dest: /etc/fstab
+      line: 'UUID=9fd2a522-b2cf-3491-8267-0b0c0cfa4bb5 /media/TCKDD hfsplus defaults,force,nofail 0 0'
+      insertafter: EOF
+      create: True
 
-- name: Auto mount VFAT drive at boot
-  lineinfile:
-    dest: /etc/fstab
-    line: 'UUID=59D7-A6BA /media/NASDisk exfat defaults,auto,nofail,umask=000,users,rw 0 0'
-    insertafter: EOF
-    create: True
+  - name: Auto mount VFAT drive at boot
+    lineinfile:
+      dest: /etc/fstab
+      line: 'UUID=59D7-A6BA /media/NASDisk exfat defaults,auto,nofail,umask=000,users,rw 0 0'
+      insertafter: EOF
+      create: True
+  become: yes

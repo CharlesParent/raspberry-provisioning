@@ -2,11 +2,10 @@
 
 - name: TCRasp's Ansible Playbook
 
-  hosts: webservers
+  hosts: raspberry
   roles:
     - ssh
     - essential-packages
     - external-disk-setup
     - deluge
   remote_user: pi
-  become: true

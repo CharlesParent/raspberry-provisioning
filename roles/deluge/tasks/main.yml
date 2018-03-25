@@ -1,23 +1,23 @@
 ---
 - set_fact:
     real_ansible_host: "{{ ansible_host }}"
-    become: true
-    becom_user: pi
 
-- name: Install deluge
-  apt:
-    name: deluged
-    state: present
+- block:
+  - name: Install deluge
+    apt:
+      name: deluged
+      state: present
 
-- name: Install deluge-console
-  apt:
-    name: deluge-console
-    state: present
+  - name: Install deluge-console
+    apt:
+      name: deluge-console
+      state: present
 
-- name: Install deluge-web
-  apt:
-    name: deluge-web
-    state: present
+  - name: Install deluge-web
+    apt:
+      name: deluge-web
+      state: present
+  become: yes
 
 - name: start deluge to init files
   command: deluged
@@ -39,7 +39,8 @@
 - name: config to run deluge-dameon at startup
   template:
     src: start-up-deluge.j2
-    dest: /etc/default/deluge-daemon
+    dest: /etc/init.d/deluge-daemon
+  become: yes
 
 - name: 'Reboot'
   shell: sleep 2 && reboot
@@ -55,10 +56,21 @@
   copy:
     src: /Users/charlesparent/Projects/rasp/ansible-pi/YaRSS2-1.4.3-py2.7.egg
     dest: ~/.config/deluge/plugins/
-    owner: root
+    owner: pi
 
 - name: restart deluged (2/2)
   command: deluged && deluge-web
 
 - name: Launch deluged deluge-web at start up
-  command: chmod 755 /etc/init.d/deluge-daemon && update-rc.d deluge-daemon defaults 
+  blockinfile:
+    path: /etc/rc.local
+    insertbefore: exit 0
+    block: |
+      uuid=59D7-A6BA
+      diskPresent='lsblk -f | grep -wq $uuid && echo yes || echo no'
+
+      if [ "$diskpresent" = "yes" ]; then
+        sudo -u pi deluged
+        deluge-web&
+      fi
+  become: yes
