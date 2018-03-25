@@ -2,6 +2,27 @@
 - set_fact:
     real_ansible_host: "{{ ansible_host }}"
 
+- name: Install git
+  apt:
+    name: git
+    state: present
+
+- name: Install exfat-fuse
+  apt:
+    name: exfat-fuse
+    state: present
+
+- name: Install fonts-powerline
+  apt:
+    name: fonts-powerline
+    state: present
+
+- name: Install zsh
+  apt:
+    name: zsh
+    state: present
+
+
 - name: Install vim
   apt:
     name: vim
