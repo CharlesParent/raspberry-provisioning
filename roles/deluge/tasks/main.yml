@@ -67,9 +67,9 @@
     insertbefore: exit 0
     block: |
       uuid=59D7-A6BA
-      diskPresent='lsblk -f | grep -wq $uuid && echo yes || echo no'
-
-      if [ "$diskpresent" = "yes" ]; then
+      diskPresent=$(sudo lsblk -f | grep $uuid | echo "yes" || echo "no")
+      if [ "$diskPresent" = "yes" ]; then
+        echo "Starting Deluge"
         sudo -u pi deluged
         deluge-web&
       fi
