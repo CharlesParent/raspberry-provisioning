@@ -53,4 +53,8 @@
     apt:
       name: exfat-fuse
       state: present
+  - name: Install minicom
+    apt:
+      name: minicom
+      state: present
   become: yes
