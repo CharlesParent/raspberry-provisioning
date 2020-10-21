@@ -15,7 +15,7 @@
       state: directory
       owner: pi
       group: pi
-      mode: 0770
+      mode: 0664
       recurse: yes
     when: NASDisk.stat.exists == False
 
@@ -25,18 +25,18 @@
       state: directory
       owner: pi
       group: pi
-      mode: 0770
+      mode: 0664
       recurse: yes
     when: CHASINGDISK.stat.exists == False
 
-  - name: Auto mount HFS drive at boot
+  - name: Auto mount ChasingDisk drive at boot
     lineinfile:
       dest: /etc/fstab
-      line: 'UUID=1518-3E99 /media/CHASINGDISK hfsplus defaults,force,nofail 0 0'
+      line: 'UUID=1518-3E99 /media/CHASINGDISK vfat defaults,nofail 0 0'
       insertafter: EOF
       create: True
 
-  - name: Auto mount VFAT drive at boot
+  - name: Auto mount NASDisk drive at boot
     lineinfile:
       dest: /etc/fstab
       line: 'UUID=59D7-A6BA /media/NASDisk exfat defaults,auto,nofail,umask=000,users,rw 0 0'

@@ -13,9 +13,9 @@
       name: deluge-console
       state: present
 
-  - name: Install deluge-web
+  - name: Install deluge-webui
     apt:
-      name: deluge-web
+      name: deluge-webui
       state: present
   become: yes
 
