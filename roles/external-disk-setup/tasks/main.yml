@@ -5,8 +5,8 @@
 - stat: path={{'/media/NASDisk'}}
   register: NASDisk
 
-- stat: path={{'/media/TCKDD'}}
-  register: TCKDD
+- stat: path={{'/media/CHASINGDISK'}}
+  register: CHASINGDISK
 
 - block:
   - name: Creates directory NASDisk
@@ -19,20 +19,20 @@
       recurse: yes
     when: NASDisk.stat.exists == False
 
-  - name: Creates directory TCKDD
+  - name: Creates directory CHASINGDISK
     file:
-      path: /media/TCKDD
+      path: /media/CHASINGDISK
       state: directory
       owner: pi
       group: pi
       mode: 0770
       recurse: yes
-    when: TCKDD.stat.exists == False
+    when: CHASINGDISK.stat.exists == False
 
   - name: Auto mount HFS drive at boot
     lineinfile:
       dest: /etc/fstab
-      line: 'UUID=9fd2a522-b2cf-3491-8267-0b0c0cfa4bb5 /media/TCKDD hfsplus defaults,force,nofail 0 0'
+      line: 'UUID=1518-3E99 /media/CHASINGDISK hfsplus defaults,force,nofail 0 0'
       insertafter: EOF
       create: True
 
