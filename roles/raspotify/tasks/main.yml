@@ -1,0 +1,32 @@
+---
+- block:
+  - name: Install apt-transport-https
+    apt:
+      name: apt-transport-https
+      state: present
+
+  - name: Install curl
+    apt:
+      name: curl
+      state: present
+
+  - name: Add raspotify GPG key (1/2)
+    command: curl -sSL https://dtcooper.github.io/raspotify/key.asc | sudo apt-key add -v -
+
+  - name: Add raspotify GPG key (2/2)
+    command: echo 'deb https://dtcooper.github.io/raspotify raspotify main' | sudo tee /etc/apt/sources.list.d/raspotify.list
+
+  - name: Update repositories cache and install raspotify
+    apt:
+      name: raspotify
+      update_cache: yes
+
+  - name: copy raspotify config
+    template:
+      src: raspotify.j2
+      dest: /etc/default/raspotify
+
+  - name: Restart raspotify
+    service:
+      name: raspotify
+      state: restarted

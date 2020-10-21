@@ -6,6 +6,7 @@
   roles:
     - ssh
     - essential-packages
+    - raspotify
     - external-disk-setup
     - deluge
   remote_user: pi
