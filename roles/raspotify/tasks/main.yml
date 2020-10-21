@@ -11,7 +11,7 @@
       state: present
 
   - name: Add raspotify GPG key (1/2)
-    command: curl -sSL https://dtcooper.github.io/raspotify/key.asc | sudo apt-key add -v -
+    raw: curl -sSL https://dtcooper.github.io/raspotify/key.asc | sudo apt-key add -v -
 
   - name: Add raspotify GPG key (2/2)
     command: echo 'deb https://dtcooper.github.io/raspotify raspotify main' | sudo tee /etc/apt/sources.list.d/raspotify.list

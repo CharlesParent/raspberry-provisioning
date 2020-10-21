@@ -54,7 +54,7 @@
 
 - name: "Install YaRSS2 plugin"
   copy:
-    src: /Users/charlesparent/Projects/rasp/ansible-pi/YaRSS2-1.4.3-py2.7.egg
+    src: YaRSS2-1.4.3-py2.7.egg
     dest: ~/.config/deluge/plugins/
     owner: pi
 
