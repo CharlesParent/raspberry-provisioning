@@ -8,5 +8,5 @@
     - essential-packages
     - raspotify
     - external-disk-setup
-    - deluge
+    #- deluge
   remote_user: pi
