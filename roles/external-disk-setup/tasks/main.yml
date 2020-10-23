@@ -32,14 +32,15 @@
   - name: Auto mount ChasingDisk drive at boot
     lineinfile:
       dest: /etc/fstab
-      line: 'UUID=1518-3E99 /media/CHASINGDISK vfat defaults,nofail 0 0'
+      line: 'UUID=1518-3E99 /media/CHASINGDISK vfat defaults,nofail,uid=pi,gid=pi 0 0'
+
       insertafter: EOF
       create: True
 
   - name: Auto mount NASDisk drive at boot
     lineinfile:
       dest: /etc/fstab
-      line: 'UUID=59D7-A6BA /media/NASDisk exfat defaults,auto,nofail,umask=000,users,rw 0 0'
+      line: 'UUID=59D7-A6BA /media/NASDisk exfat defaults,auto,nofail,umask=000,users,rw,uid=pi,gid=pi 0 0'
       insertafter: EOF
       create: True
   become: yes
